@@ -1,29 +1,10 @@
-def show_grade_criteria():
-    print("--- Grade Criteria ---")
-    print("90 - 100 : Grade S")
-    print("80 - 89  : Grade A")
-    print("65 - 79  : Grade B")
-    print("50 - 64  : Grade C")
-    print("40 - 49  : Grade D")
-    print("Below 40 : Grade F")
-    print("----------------------\n")
+# student_grade.py
+# Program to calculate student grade based on average marks
 
-def show_student_details():
-    print("--- Student Details ---")
-    print("Name: NIKHIL")
-    print("Department: BCA")
-    print("Semester: 3\n")
-
-def show_subject_marks():
-    print("--- Subject Marks ---")
-    print("Subject 1: 85")
-    print("Subject 2: 90")
-    print("Subject 3: 95\n")
-
-def calculate_average():
-    return (85 + 90 + 95) / 3
+import sys
 
 def calculate_grade(avg):
+    """Return grade based on average marks."""
     if avg >= 90:
         return "S"
     elif avg >= 80:
@@ -37,13 +18,37 @@ def calculate_grade(avg):
     else:
         return "F"
 
-def main():
-    show_grade_criteria()
-    show_student_details()
-    show_subject_marks()
-    avg = calculate_average()
-    print(f"Average Marks: {avg}")
-    print(f"Final Grade: {calculate_grade(avg)}")
 
 if __name__ == "__main__":
-    main()
+    print("=== Student Grade Calculator ===")
+
+    try:
+        if len(sys.argv) == 7:
+            # Case 1: Arguments passed (for Jenkins or CLI)
+            name = sys.argv[1]
+            dept = sys.argv[2]
+            sem = sys.argv[3]
+            m1 = float(sys.argv[4])
+            m2 = float(sys.argv[5])
+            m3 = float(sys.argv[6])
+        else:
+            # Case 2: Console input
+            name = input("Enter student name: ")
+            dept = input("Enter department: ")
+            sem = input("Enter semester: ")
+            m1 = float(input("Enter marks of subject 1: "))
+            m2 = float(input("Enter marks of subject 2: "))
+            m3 = float(input("Enter marks of subject 3: "))
+
+        avg = (m1 + m2 + m3) / 3
+        grade = calculate_grade(avg)
+
+        print("\n=== Student Details ===")
+        print("Name :", name)
+        print("Department :", dept)
+        print("Semester :", sem)
+        print("Average Marks :", round(avg, 2))
+        print("Grade :", grade)
+
+    except ValueError:
+        print("Invalid input! Please enter numeric values for marks.")
